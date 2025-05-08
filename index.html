@@ -1453,6 +1453,24 @@
             .theme-switch {
                 margin-right: 0;
             }
+
+            /* Mobile text alignment */
+            #services .service-card p,
+            #about .about-text p {
+                text-align: justify;
+                text-align-last: center;
+            }
+
+            #services .service-card,
+            #about .about-container,
+            #portfolio {
+                text-align: center;
+            }
+
+            .about-text {
+                text-align: justify;
+                text-align-last: center;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1547,7 +1565,7 @@
 
             <!-- Music Player -->
             <div class="music-player">
-                <audio id="audio-player" loop>
+                <audio id="audio-player">
                     <!-- Replace these with your actual MP3 files -->
                     <source src="music1.mp3" type="audio/mpeg">
                     <source src="music2.mp3" type="audio/mpeg">
@@ -1673,11 +1691,8 @@
             <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" alt="Wassef Ben Slimane" class="about-img">
             <div class="about-text">
                 <h3 data-i18n="about.name">Wassef Ben Slimane</h3>
-                <p data-i18n="about.desc1">With over 10 years of professional experience in graphic, motion, and web design, Wassef Ben Slimane is the creative force behind Tunetek Studio Design. His journey began at a young age with a passion for visual arts and technology.</p>
-                <p>After graduating with honors from the prestigious School of Visual Arts, Wassef worked with several leading design agencies in Europe and North America, honing his skills across various disciplines.</p>
-                <p>In 2015, Wassef founded Tunetek Studio Design with the vision of creating a design studio that blends artistic creativity with technical excellence. The studio has grown into a respected name known for its innovative approach.</p>
-                <p>Wassef's design philosophy centers around the belief that great design should be both visually appealing and functionally effective. He emphasizes user-centered design principles while maintaining timeless fundamentals.</p>
-
+                <p data-i18n="about.desc1">With over 10 years of experience in graphic, motion, and web design, Wassef Ben Slimane founded Tunetek Studio Design to blend artistic creativity with technical excellence.</p>
+                <p>After working with leading design agencies worldwide, he established the studio in 2015, which has since become known for innovative design solutions that are both visually appealing and functionally effective.</p>
             </div>
         </div>
     </section>
@@ -1846,6 +1861,9 @@
             loadSong(currentSongIndex);
         });
 
+        // Remove loop attribute from audio element
+        audioPlayer.loop = false;
+
         // Volume control
         volumeSlider.addEventListener('input', (e) => {
             audioPlayer.volume = e.target.value;
@@ -1962,8 +1980,8 @@
                 "portfolio.title": "Our Portfolio",
                 "about.title": "About the Founder",
                 "about.name": "Wassef Ben Slimane",
-                "about.desc1": "With over 10 years of professional experience in graphic, motion, and web design, Wassef Ben Slimane is the creative force behind Tunetek Studio Design.",
-                "about.desc2": "His passion for visual storytelling and attention to detail has helped numerous clients establish strong brand identities and engaging digital experiences.",
+                "about.desc1": "With over 10 years of experience in graphic, motion, and web design, Wassef Ben Slimane founded Tunetek Studio Design to blend artistic creativity with technical excellence.",
+                "about.desc2": "After working with leading design agencies worldwide, he established the studio in 2015, which has since become known for innovative design solutions that are both visually appealing and functionally effective.",
                 "skills.branding": "Branding",
                 "skills.uiux": "UI/UX",
                 "skills.animation": "Animation",
@@ -1998,8 +2016,8 @@
                 "portfolio.title": "Notre Portfolio",
                 "about.title": "À propos du Fondateur",
                 "about.name": "Wassef Ben Slimane",
-                "about.desc1": "Avec plus de 10 ans d'expérience professionnelle en design graphique, motion et web, Wassef Ben Slimane est la force créative derrière Tunetek Studio Design.",
-                "about.desc2": "Sa passion pour la narration visuelle et son souci du détail ont aidé de nombreux clients à établir des identités de marque solides et des expériences digitales engageantes.",
+                "about.desc1": "Avec plus de 10 ans d'expérience en design graphique, motion et web, Wassef Ben Slimane a fondé Tunetek Studio Design pour allier créativité artistique et excellence technique.",
+                "about.desc2": "Après avoir travaillé avec des agences de design de premier plan dans le monde entier, il a créé le studio en 2015, qui est depuis devenu connu pour ses solutions de design innovantes à la fois visuellement attrayantes et fonctionnellement efficaces.",
                 "skills.branding": "Identité Visuelle",
                 "skills.uiux": "Interface Utilisateur",
                 "skills.animation": "Animation",
