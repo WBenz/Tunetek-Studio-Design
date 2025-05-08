@@ -140,7 +140,7 @@
             width: 0%;
             background-color: var(--loading-bar-progress);
             border-radius: 5px;
-            transition: width 0.3s ease;
+            transition: width 0.3s ease, background-color 0.5s ease;
         }
 
         .progress-percentage {
@@ -178,6 +178,7 @@
             height: 6em;
             transform: translate3d(0,0,0);
             transform-style: preserve-3d;
+            transition: background-color 0.5s ease, box-shadow 0.5s ease;
         }
 
         .book-loader__pg-shadow,
@@ -608,7 +609,7 @@
             align-items: center;
             text-decoration: none;
             transition: transform 0.3s ease;
-            margin-right: 20px;
+            margin-left: 20px; /* Moved logo to the right */
         }
 
             .logo:hover {
@@ -635,6 +636,7 @@
                 display: inline-block;
                 width: 100%;
                 text-align: left;
+                letter-spacing: 1px; /* Added spacing to match width */
             }
 
             .logo-text .studio-design {
@@ -644,12 +646,15 @@
                 display: inline-block;
                 width: 100%;
                 text-align: left;
+                letter-spacing: 0.5px; /* Increased spacing to match Tunetek width */
+                margin-left: 2px; /* Adjusted alignment */
             }
 
         /* Navigation */
         .nav-container {
             display: flex;
             align-items: center;
+            margin-right: 20px; /* Moved nav to the left */
         }
 
         .nav-links {
@@ -701,7 +706,7 @@
             display: flex;
             align-items: center;
             font-weight: 500;
-            margin-left: 20px;
+            margin-right: 20px; /* Moved dark mode toggle to the left */
         }
 
             .theme-switch:hover {
@@ -856,7 +861,7 @@
         }
 
         .hero-logo {
-            height: 90px;
+            height: 110px;
             margin-right: 20px;
             vertical-align: middle;
         }
@@ -894,6 +899,21 @@
                 margin-right: 0;
                 margin-bottom: 15px;
             }
+            
+            /* Mobile logo text adjustments */
+            .logo-text .tunetek {
+                font-size: 2rem;
+                letter-spacing: 1.5px;
+                width: auto;
+                text-align: center;
+            }
+            .logo-text .studio-design {
+                font-size: 0.5rem;
+                letter-spacing: 0px;
+                width: auto;
+                text-align: center;
+                margin-left: 0;
+            }
         }
 
         @media (max-width: 576px) {
@@ -907,6 +927,15 @@
             .hero-logo {
                 height: 50px;
                 margin-bottom: 10px;
+            }
+            
+            .logo-text .tunetek {
+                font-size: 1.0rem;
+                letter-spacing: 1.2px;
+            }
+            .logo-text .studio-design {
+                font-size: 0.7rem;
+                letter-spacing: 3.5px;
             }
         }
 
@@ -1338,6 +1367,7 @@
                 padding: 2rem 0;
                 transition: left 0.3s ease;
                 z-index: 999;
+                margin-right: 0;
             }
 
                 .nav-container.active {
@@ -1363,7 +1393,7 @@
             .theme-switch, .language-switch {
                 margin: 1rem 0;
                 justify-content: center;
-                width: 100%;
+                width: 40%;
             }
             
             /* Center theme switch in mobile menu */
@@ -1379,18 +1409,6 @@
 
             .section-title {
                 font-size: 2rem;
-            }
-
-            .logo-text .tunetek {
-                font-size: 1.2rem;
-                width: auto;
-                text-align: center;
-            }
-
-            .logo-text .studio-design {
-                font-size: 0.8rem;
-                width: auto;
-                text-align: center;
             }
 
             .music-player {
@@ -1422,6 +1440,19 @@
             .hero-content {
                 padding: 1.5rem;
             }
+            
+            /* Adjust header layout for mobile */
+            .header-container {
+                justify-content: space-between;
+            }
+            
+            .logo {
+                margin-left: 10px;
+            }
+            
+            .theme-switch {
+                margin-right: 0;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1436,14 +1467,6 @@
 
             header {
                 padding: 1rem;
-            }
-
-            .logo-text .tunetek {
-                font-size: 1.0rem;
-            }
-
-            .logo-text .studio-design {
-                font-size: 0.7rem;
             }
 
             .music-player {
@@ -1529,6 +1552,7 @@
                     <source src="music1.mp3" type="audio/mpeg">
                     <source src="music2.mp3" type="audio/mpeg">
                     <source src="music3.mp3" type="audio/mpeg">
+                    <source src="music4.mp3" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
 
@@ -1653,14 +1677,7 @@
                 <p>After graduating with honors from the prestigious School of Visual Arts, Wassef worked with several leading design agencies in Europe and North America, honing his skills across various disciplines.</p>
                 <p>In 2015, Wassef founded Tunetek Studio Design with the vision of creating a design studio that blends artistic creativity with technical excellence. The studio has grown into a respected name known for its innovative approach.</p>
                 <p>Wassef's design philosophy centers around the belief that great design should be both visually appealing and functionally effective. He emphasizes user-centered design principles while maintaining timeless fundamentals.</p>
-                <div class="skills">
-                    <span class="skill" data-i18n="skills.branding">Branding</span>
-                    <span class="skill" data-i18n="skills.uiux">UI/UX</span>
-                    <span class="skill" data-i18n="skills.animation">Animation</span>
-                    <span class="skill" data-i18n="skills.webdev">Web Development</span>
-                    <span class="skill" data-i18n="skills.illustration">Illustration</span>
-                    <span class="skill" data-i18n="skills.typography">Typography</span>
-                </div>
+
             </div>
         </div>
     </section>
@@ -1711,8 +1728,6 @@
             const progressBar = document.querySelector('.progress');
             const progressPercentage = document.querySelector('.progress-percentage');
             const bookLoader = document.querySelector('.book-loader');
-            const bookLoaderShadow = document.querySelector('.book-loader__pg-shadow');
-            const bookLoaderPgs = document.querySelectorAll('.book-loader__pg');
             
             // Disable all interactions during loading
             document.body.classList.add('loading');
@@ -1729,7 +1744,7 @@
                 document.documentElement.style.setProperty('--loading-bar-progress', randomColor);
                 
                 // Change every 2 seconds
-                setTimeout(changeLoaderColors, 2000);
+                setTimeout(changeLoaderColors, 1000);
             }
             
             // Start changing colors
@@ -1778,7 +1793,8 @@
         const songs = [
             'music1.mp3',
             'music2.mp3',
-            'music3.mp3'
+            'music3.mp3',
+            'music4.mp3'
         ];
 
         let currentSongIndex = 0;
