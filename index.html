@@ -902,14 +902,14 @@
             
             /* Mobile logo text adjustments */
             .logo-text .tunetek {
-                font-size: 2rem;
+                font-size: 1.5rem;
                 letter-spacing: 1.5px;
                 width: auto;
                 text-align: center;
             }
             .logo-text .studio-design {
-                font-size: 0.5rem;
-                letter-spacing: 0px;
+                font-size: 0.9rem;
+                letter-spacing: 1px;
                 width: auto;
                 text-align: center;
                 margin-left: 0;
@@ -930,12 +930,12 @@
             }
             
             .logo-text .tunetek {
-                font-size: 1.0rem;
+                font-size: 1.5rem;
                 letter-spacing: 1.2px;
             }
             .logo-text .studio-design {
-                font-size: 0.7rem;
-                letter-spacing: 3.5px;
+                font-size: 0.8rem;
+                letter-spacing: 1px;
             }
         }
 
@@ -1733,18 +1733,20 @@
             document.body.classList.add('loading');
             
             // Function to change loader colors
+            let isBlue = true;
             function changeLoaderColors() {
                 const colors = ['#1a73e8', '#ff6b00'];
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                const color = isBlue ? colors[0] : colors[1];
+                isBlue = !isBlue;
                 
-                // Set CSS variables for loader colors
-                document.documentElement.style.setProperty('--loader-primary', randomColor);
-                document.documentElement.style.setProperty('--loader-primary-l', randomColor);
-                document.documentElement.style.setProperty('--loader-primary-d', randomColor);
-                document.documentElement.style.setProperty('--loading-bar-progress', randomColor);
+                // Set CSS variables for loader colors with smooth transition
+                document.documentElement.style.setProperty('--loader-primary', color);
+                document.documentElement.style.setProperty('--loader-primary-l', color);
+                document.documentElement.style.setProperty('--loader-primary-d', color);
+                document.documentElement.style.setProperty('--loading-bar-progress', color);
                 
                 // Change every 2 seconds
-                setTimeout(changeLoaderColors, 1000);
+                setTimeout(changeLoaderColors, 2000);
             }
             
             // Start changing colors
@@ -1835,6 +1837,12 @@
         // Previous song
         prevBtn.addEventListener('click', () => {
             currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            loadSong(currentSongIndex);
+        });
+
+        // Auto play next song when current song ends
+        audioPlayer.addEventListener('ended', () => {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
             loadSong(currentSongIndex);
         });
 
