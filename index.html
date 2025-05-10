@@ -68,15 +68,40 @@
             background-color: var(--tertiary-color);
             color: var(--text-color);
             overflow-x: hidden;
-            background-image: url('BG.jpg');
+            position: relative;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
             background-repeat: repeat;
             background-attachment: fixed;
             background-size: 300px auto;
             background-position: center;
+            transition: opacity 0.5s ease;
         }
 
-        [data-theme="dark"] body {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('BG.jpg');
+        .bg-light {
+            background-image: url('BG2.jpg');
+            opacity: 1;
+        }
+
+        .bg-dark {
+            background-image: url('BG.jpg');
+            opacity: 0;
+            z-index: -1;
+        }
+
+        [data-theme="dark"] .bg-light {
+            opacity: 0;
+        }
+
+        [data-theme="dark"] .bg-dark {
+            opacity: 0.7;
         }
 
         html {
@@ -1493,6 +1518,9 @@
     </style>
 </head>
 <body>
+    <div class="background-image bg-light"></div>
+    <div class="background-image bg-dark"></div>
+    
     <div class="loading-overlay">
         <div class="book-loader-container">
             <div class="book-loader">
@@ -2157,7 +2185,9 @@
 
         window.addEventListener('scroll', function() {
             const scrollPosition = window.pageYOffset;
-            document.body.style.backgroundPosition = `center ${scrollPosition * 0.3}px`;
+            document.querySelectorAll('.background-image').forEach(bg => {
+                bg.style.backgroundPosition = `center ${scrollPosition * 0.3}px`;
+            });
         });
     </script>
 </body>
