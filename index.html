@@ -2147,11 +2147,30 @@
     </section>
 
     <footer>
-        <p class="footer-text" data-i18n="footer.copyright">&copy; 2025 Tunetek Studio Design. All rights reserved.</p>
+        <p class="footer-text" data-i18n="footer.copyright">&copy; 2015 - 2025 Tunetek Studio Design. All rights reserved.</p>
         <p data-i18n="footer.credit">Created with passion by Wassef Ben Slimane</p>
     </footer>
 
     <script>
+
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            alert('Right-click is disabled to protect content.');
+        });
+
+        // Optional: Also disable keyboard shortcuts like Ctrl+U, Ctrl+Shift+I, etc.
+        document.addEventListener('keydown', function (e) {
+            // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            if (e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
+                alert('This action is disabled to protect content.');
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
             // Start music player immediately
             startMusicPlayer();
@@ -2995,7 +3014,7 @@
                 "contact.subject": "Subject",
                 "contact.message": "Message",
                 "contact.submit": "Send Message",
-                "footer.copyright": "&copy; 2025 Tunetek Studio Design. All rights reserved.",
+                "footer.copyright": "&copy; 2015 - 2025 Tunetek Studio Design. All rights reserved.",
                 "footer.credit": "Created with passion by Wassef Ben Slimane"
             },
             fr: {
@@ -3043,7 +3062,7 @@
                 "contact.subject": "Sujet",
                 "contact.message": "Message",
                 "contact.submit": "Envoyer le Message",
-                "footer.copyright": "&copy; 2025 Tunetek Studio Design. Tous droits réservés.",
+                "footer.copyright": "&copy; 2015 - 2025 Tunetek Studio Design. Tous droits réservés.",
                 "footer.credit": "Créé avec passion par Wassef Ben Slimane"
             }
         };
