@@ -166,98 +166,8 @@
             padding: 2rem;
             border-radius: 10px;
         }
+     
 
-        .music-player {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-left: auto;
-            margin-right: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .player-controls {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .player-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.8rem;
-        }
-
-            .player-btn:hover {
-                background: var(--secondary-color);
-                transform: scale(1.1);
-            }
-
-        .volume-container {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .volume-slider {
-            width: 80px;
-            -webkit-appearance: none;
-            height: 4px;
-            background: var(--input-border);
-            border-radius: 2px;
-            outline: none;
-        }
-
-            .volume-slider::-webkit-slider-thumb {
-                -webkit-appearance: none;
-                width: 12px;
-                height: 12px;
-                background: var(--primary-color);
-                border-radius: 50%;
-                cursor: pointer;
-            }
-
-        [data-theme="dark"] .volume-slider {
-            background: #444;
-        }
-
-            [data-theme="dark"] .volume-slider::-webkit-slider-thumb {
-                background: var(--primary-color);
-            }
-
-        .minimize-player {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 999;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,50,0.2);
-        }
-
-            .minimize-player:hover {
-                background-color: var(--secondary-color);
-                transform: scale(1.1);
-            }
 
         header {
             position: fixed;
@@ -487,13 +397,7 @@
 
         #hero {
             position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
             min-height: 100vh;
-            padding: 6rem 2rem 2rem;
             background-color: transparent;
         }
 
@@ -835,7 +739,7 @@
         }
 
         .category-item:hover::before {
-            background: linear-gradient(45deg, rgba(0,0,0,0.4), transparent);
+            background: linear-gradient(45deg, rgba(0,0,0,2), transparent);
         }
 
         .category-item img {
@@ -975,6 +879,7 @@
 
 
         .projects-grid {
+            position: relative; /* Add this */
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
@@ -1901,34 +1806,7 @@
         }
 
         @media (min-width: 769px) {
-            .minimize-player {
-                display: none !important;
-            }
-        }
 
-        .music-player.minimized {
-            transform: translateY(150%);
-        }
-
-
-
-        .minimize-player {
-            background-color: var(--primary-color);
-            transition: all 0.3s ease;
-        }
-
-            .minimize-player.minimized {
-                background-color: #777; /* Grey color */
-                opacity: 0.9;
-            }
-
-            .minimize-player:hover {
-                background-color: var(--secondary-color); /* Orange on hover */
-            }
-
-            .minimize-player.minimized:hover {
-                background-color: var(--secondary-color); /* Orange on hover */
-            }
 
 
 
@@ -2098,6 +1976,44 @@
             }
         }
 
+        /* ===== LOADING SPINNER STYLES ===== */
+        .project-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.7);
+            z-index: 10;
+        }
+
+        [data-theme="dark"] .project-loading {
+            background: rgba(30, 30, 30, 0.7);
+        }
+
+        .project-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--secondary-color);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+
     </style>
 </head>
 
@@ -2130,32 +2046,7 @@
                 </div>
             </a>
 
-            <div class="music-player">
-                <audio id="audio-player">
-                    <source src="music1.mp3" type="audio/mpeg">
-                    <source src="music2.mp3" type="audio/mpeg">
-                    <source src="music3.mp3" type="audio/mpeg">
-                    <source src="music4.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
-
-                <div class="player-controls">
-                    <button class="player-btn" id="prev-btn">
-                        <i class="fas fa-step-backward"></i>
-                    </button>
-                    <button class="player-btn" id="play-btn">
-                        <i class="fas fa-play"></i>
-                    </button>
-                    <button class="player-btn" id="next-btn">
-                        <i class="fas fa-step-forward"></i>
-                    </button>
-                </div>
-
-                <div class="volume-container">
-                    <i class="fas fa-volume-up"></i>
-                    <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.01" value="0.4">
-                </div>
-            </div>
+           
 
             <div class="nav-container" id="nav-container">
                 <ul class="nav-links">
@@ -2182,15 +2073,8 @@
         </div>
     </header>
 
-    <button class="minimize-player" id="minimize-player">
-        <i class="fas fa-music"></i>
-    </button>
 
     <section id="hero">
-
-        <button class="hero-minimize-btn" id="hero-minimize-btn" title="Toggle content">
-            <i class="fas fa-eye-slash"></i>
-        </button>
 
 
         <div class="hero-video-container">
@@ -2203,18 +2087,6 @@
             </video>
         </div>
 
-
-        <div class="hero-content">
-            <h1 class="hero-title">
-                <img src="logo_transparent.png" alt="Tunetek Logo" class="hero-logo">
-                <div class="hero-title-text">
-                    <span class="hero-title-tunetek">Tunetek</span>
-                    <span class="hero-title-studio">Studio Design</span>
-                </div>
-            </h1>
-            <p class="hero-subtitle" data-i18n="hero.subtitle">Crafting exceptional <span style="color: var(--primary-color);">graphic</span>, <span style="color: var(--primary-color);">motion</span>, and <span style="color: var(--primary-color);">web design</span> solutions</p>
-            <a href="#contact" class="cta-button" data-i18n="hero.cta">Get in Touch</a>
-        </div>
 
         <!-- Mute Button HTML -->
         <div class="video-controls-fixed">
@@ -2297,6 +2169,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="projects-grid" id="graphic-projects">
+                        <div class="project-loading">
+                            <div class="project-spinner"></div>
+                        </div>
                         <!-- Projects will be loaded dynamically -->
                     </div>
                 </div>
@@ -2312,6 +2187,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="projects-grid" id="motion-projects">
+                        <div class="project-loading">
+                            <div class="project-spinner"></div>
+                        </div>
                         <!-- Projects will be loaded dynamically -->
                     </div>
                 </div>
@@ -2327,6 +2205,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="projects-grid" id="web-projects">
+                        <div class="project-loading">
+                            <div class="project-spinner"></div>
+                        </div>
                         <!-- Projects will be loaded dynamically -->
                     </div>
                 </div>
@@ -2465,7 +2346,7 @@
 
             document.addEventListener('DOMContentLoaded', function () {
                 // Start music player immediately
-                startMusicPlayer();
+
                 initPortfolio();
 
 
@@ -2530,6 +2411,26 @@
                     // Graphic Design Projects (unchanged)
                     if (directory === 'projects/graphic/') {
                         return [
+                            'projects/graphic/Podrink-Energy Drink-Poster Design-1.jpg',
+                            'projects/graphic/Podrink-Energy Drink-Poster Design-2.jpg',
+                            'projects/graphic/Nut-Shop-Poster Design-1.jpg',
+                            'projects/graphic/Nut-Shop-Poster Design-2.jpg',
+                            'projects/graphic/Free-CheckUp-Poster Design.jpg',
+                            'projects/graphic/Rythm-Nation Dancing-Club Poster Design.jpg',
+                            'projects/graphic/Nick Tech-Store Poster Design.jpg',
+                            'projects/graphic/Petty-Care-Association Poster Design.jpg',
+                            'projects/graphic/Children-Garden-Freely Poster Design.jpg',
+                            'projects/graphic/RoadToBe-Car-Rental-Company Poster Design.jpg',
+                            'projects/graphic/Flash-Trade Poster Design-1.jpg',
+                            'projects/graphic/Flash-Trade Poster Design-2.jpg',
+                            'projects/graphic/GamIN-Store Poster Design.jpg',
+                            'projects/graphic/OnlyCare Poster Design-1.jpg',
+                            'projects/graphic/OnlyCare Poster Design-2.jpg',
+                            'projects/graphic/OnlyCare Poster Design-3.jpg',
+                            'projects/graphic/SquareTech Poster Design-1.jpg',
+                            'projects/graphic/SquareTech Poster Design-2.jpg',
+                            'projects/graphic/Stratedge-Consulting-Company Poster Design.jpg',
+                            'projects/graphic/Ophtalmologiste Business Card Design.jpg',
                             'projects/graphic/Affiche-Saida-1.jpg',
                             'projects/graphic/Affiche-Saida-2.jpg',
                             'projects/graphic/Affiche-Webofly-1.jpg',
@@ -2595,27 +2496,8 @@
                             'projects/graphic/Logo-Benzi-1.jpg',
                             'projects/graphic/Logo-Benzi-2.jpg',
                             'projects/graphic/Branding-Zeyna-1.jpg',
-                            'projects/graphic/Branding-Zeyna-2.jpg',
-                            'projects/graphic/Podrink-Energy Drink-Poster Design-1.jpg',
-                            'projects/graphic/Podrink-Energy Drink-Poster Design-2.jpg',
-                            'projects/graphic/Nut-Shop-Poster Design-1.jpg',
-                            'projects/graphic/Nut-Shop-Poster Design-2.jpg',
-                            'projects/graphic/Free-CheckUp-Poster Design.jpg',
-                            'projects/graphic/Rythm-Nation Dancing-Club Poster Design.jpg',
-                            'projects/graphic/Nick Tech-Store Poster Design.jpg',
-                            'projects/graphic/Petty-Care-Association Poster Design.jpg',
-                            'projects/graphic/Children-Garden-Freely Poster Design.jpg',
-                            'projects/graphic/RoadToBe-Car-Rental-Company Poster Design.jpg',
-                            'projects/graphic/Flash-Trade Poster Design-1.jpg',
-                            'projects/graphic/Flash-Trade Poster Design-2.jpg',
-                            'projects/graphic/GamIN-Store Poster Design.jpg',
-                            'projects/graphic/OnlyCare Poster Design-1.jpg',
-                            'projects/graphic/OnlyCare Poster Design-2.jpg',
-                            'projects/graphic/OnlyCare Poster Design-3.jpg',
-                            'projects/graphic/SquareTech Poster Design-1.jpg',
-                            'projects/graphic/SquareTech Poster Design-2.jpg',
-                            'projects/graphic/Stratedge-Consulting-Company Poster Design.jpg',
-                            'projects/graphic/Ophtalmologiste Business Card Design.jpg'
+                            'projects/graphic/Branding-Zeyna-2.jpg'
+                            
                             
                             
                         ].filter(file => extensions.some(ext => file.endsWith(ext)));
@@ -2801,87 +2683,114 @@
                 }
 
                 // Load projects for a category
+
+
+                // ... (all your existing JavaScript above the loadProjects function) ...
+
                 async function loadProjects(category) {
-                    const { basePath, extensions } = config[category];
-                    const files = scanDirectory(basePath, extensions);
-                    const projects = await groupFilesIntoProjects(files, category);
                     const container = projectContainers[category];
 
-                    // Clear existing projects
-                    container.innerHTML = '';
+                    // Show loading spinner
+                    const spinner = container.querySelector('.project-loading');
+                    if (spinner) spinner.style.display = 'flex';
 
-                    // Add loading state
-                    container.classList.remove('loaded');
+                    try {
+                        const { basePath, extensions } = config[category];
+                        const files = scanDirectory(basePath, extensions);
+                        const projects = await groupFilesIntoProjects(files, category);
 
-                    // Create project items
-                    Object.entries(projects).forEach(([projectName, project], index) => {
-                        const projectItem = document.createElement('div');
-                        projectItem.className = 'project-item';
-                        projectItem.dataset.project = projectName;
-                        projectItem.style.animationDelay = `${index * 0.1}s`;
+                        // Clear existing projects
+                        container.innerHTML = '';
 
-                        // Special handling for motion projects
-                        if (category === 'motion') {
-                            projectItem.innerHTML = `
-                                                    <div class="video-thumbnail-container">
-                                                        <img src="${project.thumbnail}" alt="${project.title}" class="video-thumbnail loading">
-                                                        <div class="video-play-icon">
-                                                            <i class="fas fa-play"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="project-overlay">
-                                                        <h3>${project.title}</h3>
-                                                        <p>${project.description}</p>
-                                                    </div>
-                                                `;
-                        } else {
-                            // Use thumbnail if available, otherwise use first file
-                            const thumbnail = project.thumbnail || project.files[0];
+                        // Re-add spinner (since we cleared the container)
+                        if (spinner) container.appendChild(spinner);
 
-                            projectItem.innerHTML = `
-                                                    <img src="${thumbnail}" alt="${project.title}" class="loading">
-                                                    <div class="project-overlay">
-                                                        <h3>${project.title}</h3>
-                                                        <p>${project.description}</p>
-                                                    </div>
-                                                `;
-                        }
+                        // Create document fragment
+                        const fragment = document.createDocumentFragment();
 
-                        // Load image properly
-                        const img = projectItem.querySelector('img');
-                        if (img) {
-                            const tempImg = new Image();
-                            tempImg.src = img.src;
-                            tempImg.onload = () => {
-                                img.src = tempImg.src;
-                                img.classList.remove('loading');
-                            };
-                            tempImg.onerror = () => {
-                                img.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="225" viewBox="0 0 300 225"%3E%3Crect fill="%23ffffff20" width="300" height="225"/%3E%3Ctext fill="%23666" font-family="sans-serif" font-size="20" dy=".35em" text-anchor="middle" x="150" y="112.5"%3E' +
-                                    project.title.toUpperCase() + '%3C/text%3E%3C/svg%3E';
-                                img.classList.remove('loading');
-                            };
-                        }
+                        // Create project items
+                        Object.entries(projects).forEach(([projectName, project], index) => {
+                            const projectItem = document.createElement('div');
+                            projectItem.className = 'project-item';
+                            projectItem.dataset.project = projectName;
+                            projectItem.style.animationDelay = `${index * 0.1}s`;
 
-                        // Add click event
-                        projectItem.addEventListener('click', () => {
-                            if (category === 'graphic') {
-                                openGraphicProjectModal(project);
-                            } else if (category === 'motion') {
-                                openMotionProjectModal(project);
-                            } else if (category === 'web') {
-                                openWebProjectModal(project);
+                            // Special handling for motion projects
+                            if (category === 'motion') {
+                                projectItem.innerHTML = `
+                    <div class="video-thumbnail-container">
+                        <img src="${project.thumbnail}" alt="${project.title}" class="video-thumbnail loading">
+                        <div class="video-play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="project-overlay">
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                    </div>
+                `;
+                            } else {
+                                // Use thumbnail if available, otherwise use first file
+                                const thumbnail = project.thumbnail || project.files[0];
+
+                                projectItem.innerHTML = `
+                    <img src="${thumbnail}" alt="${project.title}" class="loading">
+                    <div class="project-overlay">
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                    </div>
+                `;
                             }
+
+                            // Load image properly
+                            const img = projectItem.querySelector('img');
+                            if (img) {
+                                const tempImg = new Image();
+                                tempImg.src = img.src;
+                                tempImg.onload = () => {
+                                    img.src = tempImg.src;
+                                    img.classList.remove('loading');
+                                };
+                                tempImg.onerror = () => {
+                                    img.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="225" viewBox="0 0 300 225"%3E%3Crect fill="%23ffffff20" width="300" height="225"/%3E%3Ctext fill="%23666" font-family="sans-serif" font-size="20" dy=".35em" text-anchor="middle" x="150" y="112.5"%3E' +
+                                        project.title.toUpperCase() + '%3C/text%3E%3C/svg%3E';
+                                    img.classList.remove('loading');
+                                };
+                            }
+
+                            // Add click event
+                            projectItem.addEventListener('click', () => {
+                                if (category === 'graphic') {
+                                    openGraphicProjectModal(project);
+                                } else if (category === 'motion') {
+                                    openMotionProjectModal(project);
+                                } else if (category === 'web') {
+                                    openWebProjectModal(project);
+                                }
+                            });
+
+                            fragment.appendChild(projectItem);
                         });
 
-                        container.appendChild(projectItem);
-                    });
+                        // Append all projects at once
+                        container.appendChild(fragment);
 
-                    // Show projects with animation
-                    setTimeout(() => {
-                        container.classList.add('loaded');
-                    }, 100);
+                        // Hide loading spinner
+                        if (spinner) spinner.style.display = 'none';
+
+                        // Show projects with animation
+                        setTimeout(() => {
+                            container.classList.add('loaded');
+                        }, 100);
+                    } catch (error) {
+                        console.error("Error loading projects:", error);
+                        // Hide spinner on error too
+                        if (spinner) spinner.style.display = 'none';
+                        container.innerHTML = '<p>Error loading projects. Please try again.</p>';
+                    }
                 }
+
+                // ... (all your existing JavaScript below the loadProjects function) ...
 
                 // Open category modal when clicking a category
                 categoryItems.forEach(item => {
@@ -3237,82 +3146,7 @@
                 }
             }
 
-            const audioPlayer = document.getElementById('audio-player');
-            const playBtn = document.getElementById('play-btn');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const volumeSlider = document.getElementById('volume-slider');
-            const musicPlayer = document.querySelector('.music-player');
-            const minimizePlayerBtn = document.getElementById('minimize-player');
-
-            const songs = [
-                'music1.mp3',
-                'music2.mp3',
-                'music3.mp3',
-                'music4.mp3'
-            ];
-
-            let currentSongIndex = 0;
-
-            function loadSong(index) {
-                audioPlayer.src = songs[index];
-                audioPlayer.play().catch(e => {
-                    console.log("Autoplay was prevented:", e);
-                    playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                });
-            }
-
-            function startMusicPlayer() {
-                audioPlayer.volume = 0.4;
-                volumeSlider.value = 0.4;
-                loadSong(currentSongIndex);
-            }
-
-            playBtn.addEventListener('click', () => {
-                if (audioPlayer.paused) {
-                    audioPlayer.play();
-                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                } else {
-                    audioPlayer.pause();
-                    playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                }
-            });
-
-            nextBtn.addEventListener('click', () => {
-                currentSongIndex = (currentSongIndex + 1) % songs.length;
-                loadSong(currentSongIndex);
-            });
-
-            prevBtn.addEventListener('click', () => {
-                currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-                loadSong(currentSongIndex);
-            });
-
-            audioPlayer.addEventListener('ended', () => {
-                currentSongIndex = (currentSongIndex + 1) % songs.length;
-                loadSong(currentSongIndex);
-            });
-
-            audioPlayer.loop = false;
-
-            volumeSlider.addEventListener('input', (e) => {
-                audioPlayer.volume = e.target.value;
-            });
-
-            minimizePlayerBtn.addEventListener('click', () => {
-                musicPlayer.classList.toggle('minimized');
-                minimizePlayerBtn.classList.toggle('minimized');
-                // Keep the music note icon always the same
-                minimizePlayerBtn.innerHTML = '<i class="fas fa-music"></i>';
-            });
-
-            audioPlayer.addEventListener('play', () => {
-                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            });
-
-            audioPlayer.addEventListener('pause', () => {
-                playBtn.innerHTML = '<i class="fas fa-play"></i>';
-            });
+           
 
             const translations = {
                 en: {
@@ -3669,24 +3503,6 @@
             });
 
 
-
-            // Add this to your existing JavaScript
-            const heroMinimizeBtn = document.getElementById('hero-minimize-btn');
-            const heroContent = document.querySelector('.hero-content');
-
-            heroMinimizeBtn.addEventListener('click', function () {
-                // Toggle minimized class
-                heroContent.classList.toggle('minimized');
-
-                // Change icon based on state
-                if (heroContent.classList.contains('minimized')) {
-                    this.innerHTML = '<i class="fas fa-eye"></i>';
-                    this.setAttribute('title', 'Show content');
-                } else {
-                    this.innerHTML = '<i class="fas fa-eye-slash"></i>';
-                    this.setAttribute('title', 'Hide content');
-                }
-            });
 
 
             // Add this to your existing JavaScript
