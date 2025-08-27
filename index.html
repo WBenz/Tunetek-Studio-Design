@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tunetek Studio Design | Creative Design Solutions</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">    
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
     <link rel="icon" href="favicon-16x16.png" type="image/png" sizes="16x16">
     <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
@@ -102,7 +102,7 @@
             scroll-behavior: smooth;
         }
 
-
+        /* Hero Video Responsive Styles */
         .hero-video-container {
             position: absolute;
             top: 0;
@@ -111,10 +111,11 @@
             height: 100%;
             z-index: -1;
             overflow: hidden;
-            pointer-events: none; /* Allows clicks to pass through */
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-
-
 
         .hero-video {
             width: 100%;
@@ -166,8 +167,6 @@
             padding: 2rem;
             border-radius: 10px;
         }
-     
-
 
         header {
             position: fixed;
@@ -660,8 +659,6 @@
             }
         }
 
-
-
         /* Mobile Button Positioning (767px and below) */
         @media (max-width: 767px) {
             /* Adjust both control buttons */
@@ -681,15 +678,6 @@
                 right: 20px;
             }
 
-            /* Music player adjustments */
-            .music-player {
-                bottom: 15px !important; /* Keep player at bottom */
-                width: calc(100% - 40px);
-                left: 50%;
-                transform: translateX(-50%);
-                z-index: 5;
-            }
-
             /* Button layering */
             .hero-minimize-btn,
             .video-controls-fixed {
@@ -707,7 +695,6 @@
             }
         }
         /* ===== END OF NEW CODE ===== */
-
 
         .category-item:nth-child(1) {
             animation: fadeInUp 0.8s 0.4s forwards;
@@ -818,6 +805,7 @@
 
         .modal-content {
             position: relative;
+            z-index: 20001; /* ensure content sits above everything */
             width: 90%;
             max-width: 1200px;
             background-color: var(--card-bg);
@@ -828,6 +816,7 @@
             overflow-y: auto;
             transform: translateY(50px);
             transition: all 0.3s ease;
+            margin-top: 100px; /* 🔥 pushes modal down below header */
         }
 
         .modal.active .modal-content {
@@ -876,7 +865,6 @@
         }
 
         /* Projects Grid */
-
 
         .projects-grid {
             position: relative; /* Add this */
@@ -1550,32 +1538,10 @@
             margin-bottom: 1rem;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
         @keyframes fadeInDown {
             from {
                 opacity: 0;
                 transform: translateY(-30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
             }
 
             to {
@@ -1608,10 +1574,6 @@
 
             .about-img {
                 margin-bottom: 2rem;
-            }
-
-            .music-player {
-                margin-right: 10px;
             }
         }
 
@@ -1719,31 +1681,6 @@
                 font-size: 2rem;
             }
 
-            .music-player {
-                position: fixed;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: var(--header-bg);
-                padding: 10px;
-                border-radius: 30px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-                z-index: 500;
-                margin: 0;
-                width: 60%;
-                justify-content: center;
-            }
-
-                .music-player .player-btn {
-                    width: 30px;
-                    height: 30px;
-                    font-size: 1rem;
-                }
-
-            .minimize-player {
-                display: flex;
-            }
-
             .hero-content {
                 padding: 1.5rem;
             }
@@ -1792,25 +1729,12 @@
                 padding: 1rem;
             }
 
-            .music-player {
-                width: 60%;
-            }
-
-            .volume-slider {
-                width: 60px;
-            }
-
             .hero-content {
                 padding: 1rem;
             }
         }
 
-        @media (min-width: 769px) {
-
-
-
-
-        /* Loading Animation Styles */
+        /* Loading Animation Styles - MOVED OUTSIDE MEDIA QUERY */
         #loading-overlay {
             position: fixed;
             top: 0;
@@ -1861,6 +1785,32 @@
             transition: width 0.1s linear;
         }
 
+        /* For tablets and smaller screens */
+        @media (max-width: 768px) {
+            .loading-gif {
+                width: 100px;
+                height: 100px;
+            }
+
+            .loading-progress-container {
+                width: 150px;
+                height: 8px;
+            }
+        }
+
+        /* For mobile phones */
+        @media (max-width: 480px) {
+            .loading-gif {
+                width: 80px;
+                height: 80px;
+            }
+
+            .loading-progress-container {
+                width: 130px;
+                height: 6px;
+            }
+        }
+
         /* Video thumbnail styles */
         .video-thumbnail-container {
             position: relative;
@@ -1890,7 +1840,6 @@
             font-size: 1.5rem;
             pointer-events: none;
         }
-
 
         /* Hero minimize button styles */
         .hero-minimize-btn {
@@ -1931,18 +1880,18 @@
         /* Mobile Portrait (9:16 aspect ratio) */
         @media (max-width: 768px) and (orientation: portrait) {
             .hero-video {
-                aspect-ratio: 16/9;
                 width: 100%;
-                height: auto;
+                height: 100%;
+                object-fit: cover;
             }
         }
 
         /* Mobile Landscape (16:9 aspect ratio) */
         @media (max-width: 768px) and (orientation: landscape) {
             .hero-video {
-                aspect-ratio: 16/9;
                 width: 100%;
-                height: auto;
+                height: 100%;
+                object-fit: cover;
             }
         }
 
@@ -1954,7 +1903,6 @@
                 object-fit: cover;
             }
         }
-
 
         /* Ensure video container adapts to content */
         .hero-video-container {
@@ -2013,15 +1961,358 @@
             }
         }
 
+        /* For tablets and smaller screens */
+        @media (max-width: 768px) {
+            .loading-gif {
+                width: 100px;
+                height: 100px;
+            }
 
+            .loading-progress-container {
+                width: 150px;
+                height: 8px;
+            }
+        }
+
+        /* For mobile phones */
+        @media (max-width: 480px) {
+            .loading-gif {
+                width: 80px;
+                height: 80px;
+            }
+
+            .loading-progress-container {
+                width: 130px;
+                height: 6px;
+            }
+        }
+
+        /* === FIX HERO VIDEO BELOW FIXED HEADER === */
+        #hero {
+            margin-top: 80px; /* Adjust for desktop header height */
+        }
+
+        @media (max-width: 768px) {
+            #hero {
+                margin-top: 100px; /* Adjust for taller mobile header */
+            }
+        }
+
+        /* --- Custom Cursor Styles --- */
+        body {
+            cursor: none; /* Hide default cursor */
+        }
+
+        .custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border: 2px solid var(--secondary-color);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease, background 0.2s ease, width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+            opacity: 0.6; /* transparency */
+            z-index: 99999;
+        }
+
+            .custom-cursor.hover {
+                background: var(--secondary-color);
+                width: 30px;
+                height: 30px;
+                opacity: 0.4; /* more transparency on hover */
+            }
     </style>
+
+    <style id="hero-video-overrides-3">
+        /* Hero section matches video height and sits directly under header */
+        #hero {
+            margin-top: var(--header-offset,0px) !important;
+            padding: 0 !important;
+            position: relative !important;
+            height: auto !important;
+        }
+
+            /* Hero video container should shrink-wrap the video */
+            #hero .hero-video-container {
+                position: relative !important;
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: block !important;
+                overflow: hidden !important;
+            }
+
+            /* Video full width */
+            #hero video.hero-video {
+                width: 100% !important;
+                height: auto !important;
+                object-fit: cover !important;
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            /* Mute/unmute button pinned top-right of video with 15px inward padding */
+            #hero .video-controls-fixed {
+                position: absolute !important;
+                top: 15px !important;
+                right: 15px !important;
+                bottom: auto !important;
+                left: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                z-index: 1002 !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+
+            /* Remove any gap after hero before next section */
+            #hero + section {
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+            }
+    </style>
+
+    <!-- Section Title Normalization Patch (2025-08-25) -->
+    <style id="section-title-normalize">
+        /* === Section Title Normalization (2025-08-25) === */
+        /* Centers ALL .section-title elements across layouts (block, flex, grid) */
+        /* Keeps underline starting from center, expanding to full text width on hover */
+
+        .section-title {
+            display: table !important; /* shrink-wrap width and allow margin centering */
+            margin: 0 auto !important; /* robust center in most parent layouts */
+            position: relative !important;
+            text-align: center !important;
+            inset: auto !important; /* reset top/right/bottom/left */
+            transform: none !important; /* undo previous centering hacks */
+            float: none !important; /* neutralize legacy floats */
+        }
+
+            /* Underline animation: start centered, expand to 100% of title text width */
+            .section-title::after {
+                content: "";
+                position: absolute;
+                bottom: -0.6em; /* adjust if needed to match your design */
+                left: 50%;
+                width: 0;
+                height: 4px;
+                transform: translateX(-50%);
+                background: var(--primary-color, currentColor);
+                transition: width .35s ease;
+                pointer-events: none;
+            }
+
+            .section-title:hover::after {
+                width: 100%;
+            }
+
+            /* Safety: neutralize stray conflicting rules on nested spans/links inside titles */
+            .section-title *, .section-title a {
+                text-align: inherit !important;
+                transform: none !important;
+                float: none !important;
+            }
+
+        /* Ensure consistent centering inside sections regardless of parent text alignment */
+        section .section-title, .section-title {
+            text-align: center !important;
+        }
+    </style>
+
+    <style id="theme-switch-patch-2">
+        /* === Theme Switch Icon Perfect Centering Patch (2025-08-25) === */
+        .theme-switch span {
+            display: none !important;
+        }
+
+        .theme-switch {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 40px !important;
+            height: 40px !important;
+            padding: 0 !important;
+            border-radius: 50% !important;
+            line-height: 0 !important;
+        }
+
+            .theme-switch i {
+                display: block !important;
+                margin: 0 !important;
+                font-size: 18px !important;
+                line-height: 1 !important;
+            }
+    </style>
+
+    <style id="hero-spacing-fix">
+        /* === Hero Section Spacing Fix (2025-08-25) === */
+        #hero + section {
+            margin-top: 0 !important;
+            padding-top: 2rem !important;
+        }
+    </style>
+
+    <style id="hero-minheight-fix-2025-08-25">
+                /* === Fix excessive gap below HERO on mobile ===
+           Root cause: #hero had min-height:100vh; combined with header offset -> blank space.
+           Solution: reset min-height and keep hero under fixed header; tighten next section padding.
+        */
+                #hero {
+                    min-height: 0 !important; /* neutralize 100vh forcing extra blank space */
+                }
+
+                @media (max-width: 768px) {
+                    #hero + section {
+                        padding-top: 1.25rem !important; /* tighter top padding for the section following hero */
+                    }
+                }
+    </style>
+
+    <style id="section-title-underline-adjust-2025-08-25">
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; /* Closer to text */
+            left: 50%;
+            width: 0;
+            height: 4px;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            transition: width 0.35s ease;
+            pointer-events: none;
+        }
+
+        .section-title:hover::after {
+            width: 100%;
+        }
+    </style>
+
+    <style id="about-role-style">
+        .about-role {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-top: -0.5rem;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .about-role {
+                text-align: center;
+            }
+        }
+    </style>
+
+    <style id="about-center-style">
+        #about {
+            text-align: center !important;
+        }
+
+            #about img {
+                display: block !important;
+                margin: 0 auto !important;
+            }
+
+            #about p,
+            #about h3,
+            #about .about-role {
+                text-align: center !important;
+            }
+    </style>
+
+    <style id="about-flex-center-style">
+        #about {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
+        }
+
+            #about img {
+                display: block !important;
+                margin: 1rem auto !important;
+            }
+    </style>
+
+    <style id="about-container-stack-fix">
+        /* Force About section layout: title -> image -> text (centered on all screens) */
+        #about .about-container {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 1rem !important;
+            float: none !important;
+        }
+
+        #about .about-img {
+            display: block !important;
+            margin: 0 auto !important;
+            float: none !important;
+        }
+
+        #about .about-text {
+            text-align: center !important;
+            margin: 0 auto !important;
+            max-width: 70ch; /* readable line length */
+        }
+    </style>
+
+    <style id="mobile-spacing-fix">
+        /* === Mobile Spacing Fix for Sections (2025-08-25) === */
+        @media (max-width: 768px) {
+            section {
+                padding-top: 3rem !important; /* reduce from 6rem */
+                padding-bottom: 2rem !important;
+                min-height: auto !important; /* prevent forced full height */
+            }
+
+            .section-title {
+                margin-bottom: 1.5rem !important;
+            }
+
+            .services-container,
+            .portfolio-container,
+            .about-container {
+                margin-top: 1.5rem !important;
+            }
+        }
+    </style>
+
+    <style id="about-role-theme-color-fix">
+        /* Theme-aware color for About Role text */
+        .about-role {
+            color: #333 !important;
+        }
+
+        [data-theme="dark"] .about-role {
+            color: #fff !important;
+        }
+    </style>
+
+
+<style id="disable-cursor-mobile">
+    @media (max-width: 768px) {
+        body {
+            cursor: auto !important;
+        }
+        .custom-cursor {
+            display: none !important;
+        }
+    }
+</style>
+
 </head>
 
-
-
-    </style>
-</head>
 <body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
 
     <!-- Add this loading animation right after the opening body tag -->
     <div id="loading-overlay">
@@ -2045,8 +2336,6 @@
                     <span class="studio-design">Studio Design</span>
                 </div>
             </a>
-
-           
 
             <div class="nav-container" id="nav-container">
                 <ul class="nav-links">
@@ -2073,20 +2362,15 @@
         </div>
     </header>
 
-
     <section id="hero">
-
 
         <div class="hero-video-container">
             <video class="hero-video" autoplay loop muted playsinline>
                 <!-- Desktop video -->
                 <source src="hero-video.mp4" media="(min-width: 769px)" type="video/mp4">
-                <!-- Mobile video -->
-                <source src="hero-video-mobile.mp4" media="(max-width: 768px)" type="video/mp4">
-                Your browser does not support the video tag.
+Your browser does not support the video tag.
             </video>
         </div>
-
 
         <!-- Mute Button HTML -->
         <div class="video-controls-fixed">
@@ -2277,12 +2561,11 @@
             <img src="profil.jpg" alt="Wassef Ben Slimane" class="about-img">
             <div class="about-text">
                 <h3 data-i18n="about.name">Wassef Ben Slimane</h3>
+<p class="about-role" data-i18n="about.role">Lead Designer & Creative Director</p>
                 <p data-i18n="about.desc1">
                     With over 10 years of experience in graphic, motion, and web design, Wassef Ben Slimane founded Tunetek Studio Design to blend artistic creativity with technical excellence.
                 </p>
                 <p data-i18n="about.desc2">After working with leading design agencies worldwide, he established the studio in 2016, which has since become known for innovative design solutions that are both visually appealing and functionally effective.</p>
-
-
 
             </div>
         </div>
@@ -2345,10 +2628,8 @@
             });
 
             document.addEventListener('DOMContentLoaded', function () {
-                // Start music player immediately
 
-                initPortfolio();
-
+                const heroVideo = document.querySelector('.hero-video');initPortfolio();
 
                 // Try to autoplay the video (with muted audio)
                 heroVideo.play().catch(e => {
@@ -2497,15 +2778,25 @@
                             'projects/graphic/Logo-Benzi-2.jpg',
                             'projects/graphic/Branding-Zeyna-1.jpg',
                             'projects/graphic/Branding-Zeyna-2.jpg'
-                            
-                            
-                            
+
                         ].filter(file => extensions.some(ext => file.endsWith(ext)));
                     }
 
                     // Motion Design Projects - updated to include all videos
                     if (directory === 'projects/motion/') {
                         return [
+
+                            'projects/motion/Flower Delivery Company Motion Design',
+                            'projects/motion/Solidarity Event Motion Design',
+                            'projects/motion/Baby Website Motion Design.mp4',
+                            'projects/motion/Camping Website Motion Design.mp4',
+                            'projects/motion/WashTop Garage Website Motion Design.mp4',
+                            'projects/motion/Car Care Website Motion Design.mp4',
+                            'projects/motion/Harmonica Website Motion Design.mp4',
+                            'projects/motion/Techno Studio Website Motion Design.mp4',
+                            'projects/motion/Multiple Web Site Motion Design.mp4',
+                            'projects/motion/Elegance Website Motion Design.mp4',
+                            'projects/motion/Trading Website Motion Design.mp4',
                             'projects/motion/Golden Chips Commercial.mp4',
                             'projects/motion/Pack Oriental Commercial.mp4',
                             'projects/motion/Panomedia Motion Design.mp4',
@@ -2524,13 +2815,14 @@
                             'projects/motion/Brains Spark-Motion Design-13.mp4',
                             'projects/motion/Brains Spark-Motion Design-14.mp4',
                             'projects/motion/Brains Spark-Motion Design-15.mp4'
+
                         ].filter(file => extensions.some(ext => file.endsWith(ext)));
                     }
 
                     // Web Design Projects (unchanged)
                     if (directory === 'projects/web/') {
                         return [
-                            
+
                             'projects/web/Car-Care-Website.jpg',
                             'projects/web/Trail-Art-Website.jpg',
                             'projects/web/Flower-Delivery-Company Website.jpg',
@@ -2683,7 +2975,6 @@
                 }
 
                 // Load projects for a category
-
 
                 // ... (all your existing JavaScript above the loadProjects function) ...
 
@@ -2845,7 +3136,6 @@
 
                     modal.classList.add('active');
                 }
-
 
                 function closeModal(modal) {
                     document.documentElement.style.overflow = '';
@@ -3146,8 +3436,6 @@
                 }
             }
 
-           
-
             const translations = {
                 en: {
                     "nav.home": "Home",
@@ -3442,17 +3730,6 @@
                 });
             });
 
-            function checkIfMobile() {
-                if (window.innerWidth >= 769) {
-                    document.getElementById('minimize-player').style.display = 'none';
-                } else {
-                    document.getElementById('minimize-player').style.display = 'flex';
-                }
-            }
-
-            window.addEventListener('DOMContentLoaded', checkIfMobile);
-            window.addEventListener('resize', checkIfMobile);
-
             window.addEventListener('scroll', function () {
                 const scrollPosition = window.pageYOffset;
                 document.querySelectorAll('.background-image').forEach(bg => {
@@ -3460,38 +3737,27 @@
                 });
             });
 
-            // Loading Animation Functionality
-            function updateLoadingProgress() {
-                const resources = window.performance.getEntriesByType("resource");
-                const totalResources = resources.length;
-                let loadedResources = 0;
+            // Replace the ENTIRE updateLoadingProgress function and related code with this:
 
-                // Count loaded resources
-                resources.forEach(resource => {
-                    if (resource.duration > 0) loadedResources++;
-                });
-
-                // Calculate progress percentage
-                const progress = (loadedResources / totalResources) * 100;
-                const progressBar = document.querySelector('.loading-progress-bar');
-
-                if (progressBar) {
-                    progressBar.style.width = `${progress}%`;
+            // Loading Animation Functionality - Fixed Version
+            function hideLoadingOverlay() {
+                const overlay = document.getElementById('loading-overlay');
+                if (overlay) {
+                    overlay.style.opacity = '0';
+                    overlay.style.visibility = 'hidden';
                 }
-
-                // If everything is loaded, hide the overlay
-                if (progress >= 100) {
-                    setTimeout(() => {
-                        const overlay = document.getElementById('loading-overlay');
-                        if (overlay) {
-                            overlay.style.opacity = '0';
-                            overlay.style.visibility = 'hidden';
-                        }
-                        document.querySelector('.video-controls-fixed').classList.add('visible');
-
-                    }, 500); // Wait a bit before hiding to show 100%
-                }
+                document.querySelector('.video-controls-fixed').classList.add('visible');
             }
+
+            // Hide loading overlay when page is fully loaded
+            if (document.readyState === 'complete') {
+                hideLoadingOverlay();
+            } else {
+                window.addEventListener('load', hideLoadingOverlay);
+            }
+
+            // Safety net: hide loading after 3 seconds max
+            setTimeout(hideLoadingOverlay, 3000);
 
             // Check loading progress periodically
             const loadingInterval = setInterval(updateLoadingProgress, 100);
@@ -3502,10 +3768,6 @@
                 updateLoadingProgress();
             });
 
-
-
-
-            // Add this to your existing JavaScript
             function setVideoSource() {
                 const video = document.querySelector('.hero-video');
                 const sources = video.querySelectorAll('source');
@@ -3517,9 +3779,15 @@
 
                 // Add appropriate source based on screen size
                 if (window.innerWidth <= 768) {
-                    video.appendChild(sources[1].cloneNode(true)); // Mobile source
+                    const mobileSource = document.createElement('source');
+                    mobileSource.src = 'hero-video.mp4';
+                    mobileSource.type = 'video/mp4';
+                    video.appendChild(mobileSource);
                 } else {
-                    video.appendChild(sources[0].cloneNode(true)); // Desktop source
+                    const desktopSource = document.createElement('source');
+                    desktopSource.src = 'hero-video.mp4';
+                    desktopSource.type = 'video/mp4';
+                    video.appendChild(desktopSource);
                 }
 
                 video.load();
@@ -3531,11 +3799,25 @@
             // Update on resize
             window.addEventListener('resize', setVideoSource);
 
+            // Update the loading progress function
+            function updateLoadingProgress() {
+                const progressBar = document.querySelector('.loading-progress-bar');
+                const resources = document.readyState === 'complete' ? 100 : 70;
+
+                if (progressBar) {
+                    progressBar.style.width = `${resources}%`;
+                }
+
+                if (document.readyState === 'complete') {
+                    hideLoadingOverlay();
+                }
+            }
+
+            // Update loading progress more frequently during page load
+            document.addEventListener('readystatechange', updateLoadingProgress);
+            window.addEventListener('load', updateLoadingProgress);
+
         </script>
-
-
-
-
 
         <script>
             // Mute Functionality
@@ -3553,6 +3835,153 @@
             video.muted = true;
         </script>
 
+<script>
+// Custom cursor (simple, no trailing)
+const cursor = document.querySelector(".custom-cursor");
 
-    </body>
+document.addEventListener("mousemove", (e) => {
+    cursor.style.top = e.clientY + "px";
+    cursor.style.left = e.clientX + "px";
+});
+
+// Hover effect on links & buttons
+const hoverTargets = document.querySelectorAll("a, button, .cta-button, .service-card");
+hoverTargets.forEach(el => {
+    el.addEventListener("mouseenter", () => cursor.classList.add("hover"));
+    el.addEventListener("mouseleave", () => cursor.classList.remove("hover"));
+});
+</script>
+
+<script>
+// Smooth scrolling only for anchor links (keeps wheel scrolling normal)
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function(e) {
+        const targetId = this.getAttribute("href").substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            e.preventDefault();
+            window.scrollTo({
+                top: targetElement.offsetTop - 70, // offset for fixed header
+                behavior: "smooth"
+            });
+        }
+    });
+});
+</script>
+
+<script id="hero-video-script-2">
+(function(){
+  function getHeader(){
+    return document.querySelector('#main-header') || document.querySelector('header');
+  }
+  function applyOffset(){
+    var header = getHeader();
+    var hero = document.querySelector('#hero');
+    if(!hero) return;
+    var offset = header ? (header.offsetHeight||0) : 0;
+    hero.style.setProperty('--header-offset', offset + 'px');
+    document.documentElement.style.scrollPaddingTop = offset + 'px';
+  }
+  window.addEventListener('load', applyOffset);
+  window.addEventListener('resize', applyOffset);
+  window.addEventListener('orientationchange', applyOffset);
+
+  // Prevent video restart on resize/orientationchange
+  var video = document.querySelector('#hero video.hero-video');
+  if(video){
+    var currentTime = 0;
+    window.addEventListener('resize', function(){
+      if(!video.paused) currentTime = video.currentTime;
+      setTimeout(function(){
+        if(currentTime > 0 && Math.abs(video.currentTime - currentTime) > 0.5){
+          try{ video.currentTime = currentTime; video.play(); }catch(e){}
+        }
+      },200);
+    });
+    window.addEventListener('orientationchange', function(){
+      if(!video.paused) currentTime = video.currentTime;
+      setTimeout(function(){
+        if(currentTime > 0 && Math.abs(video.currentTime - currentTime) > 0.5){
+          try{ video.currentTime = currentTime; video.play(); }catch(e){}
+        }
+      },400);
+    });
+
+    // Delay hiding of loading overlay until hero video is fully loaded and can play
+    var overlay = document.getElementById('loading-overlay');
+    if(overlay){
+      var hideOverlay = function(){
+        overlay.style.opacity = '0';
+        overlay.style.visibility = 'hidden';
+      };
+      video.addEventListener('canplaythrough', function(){
+        // give a small delay to ensure smooth start
+        setTimeout(hideOverlay, 300);
+      });
+    }
+  }
+})();
+</script>
+
+<script id="about-role-i18n-patch">
+(function() {
+  function applyRoleText(lang) {
+    var el = document.querySelector('.about-role[data-i18n="about.role"]');
+    if (!el) return;
+    // Store both translations on the element for clarity
+    el.setAttribute('data-i18n-en', 'Lead Designer & Creative Director');
+    el.setAttribute('data-i18n-fr', 'Directeur Créatif & Designer Principal');
+    var txt = (lang === 'fr') ? el.getAttribute('data-i18n-fr') : el.getAttribute('data-i18n-en');
+    el.textContent = txt;
+  }
+
+  function currentLang() {
+    // Prefer <html lang="...">
+    var htmlEl = document.documentElement;
+    if (htmlEl && htmlEl.lang) return htmlEl.lang.toLowerCase();
+    // Fallback: active language button
+    var active = document.querySelector('.language-btn.active');
+    if (active && /lang-fr/i.test(active.id)) return 'fr';
+    return 'en';
+  }
+
+  function setupListeners() {
+    var enBtn = document.getElementById('lang-en');
+    var frBtn = document.getElementById('lang-fr');
+    if (enBtn) enBtn.addEventListener('click', function() {
+      applyRoleText('en');
+    });
+    if (frBtn) frBtn.addEventListener('click', function() {
+      applyRoleText('fr');
+    });
+    // Also observe changes to <html lang> if other scripts toggle it
+    if ('MutationObserver' in window) {
+      var obs = new MutationObserver(function(muts) {
+        muts.forEach(function(m) {
+          if (m.type === 'attributes' && m.attributeName === 'lang') {
+            applyRoleText(currentLang());
+          }
+        });
+      });
+      obs.observe(document.documentElement, { attributes: true });
+    }
+  }
+
+  // Run after DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      applyRoleText(currentLang());
+      setupListeners();
+    });
+  } else {
+    applyRoleText(currentLang());
+    setupListeners();
+  }
+})();
+</script>
+
+
+
+
+</body>
     </html>
