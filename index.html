@@ -2387,7 +2387,6 @@
     </style>
 
 <style>
-
 /* === FINAL MOBILE FOOTER CENTERING (ALL COLUMNS) === */
 @media (max-width: 768px) {
   footer .footer-container {
@@ -2432,7 +2431,6 @@
     text-align: center !important;
   }
 }
-
 </style>
 
 <style>
@@ -2834,14 +2832,96 @@
             }
         });
 
-        document.addEventListener('DOMContentLoaded', function () {
+        // Updated Loading Animation Functionality
+        function hideLoadingOverlay() {
+            const overlay = document.getElementById('loading-overlay');
+            if (overlay) {
+                overlay.style.opacity = '0';
+                overlay.style.visibility = 'hidden';
+            }
+            document.querySelector('.video-controls-fixed').classList.add('visible');
+        }
 
-            const heroVideo = document.querySelector('.hero-video'); initPortfolio();
+        // Wait for hero video to fully load
+        function waitForVideoLoad() {
+            const heroVideo = document.querySelector('.hero-video');
+            const overlay = document.getElementById('loading-overlay');
+            const progressBar = document.querySelector('.loading-progress-bar');
+            
+            if (!heroVideo || !overlay) return;
+
+            let videoLoaded = false;
+            let pageLoaded = false;
+
+            function checkAllLoaded() {
+                if (videoLoaded && pageLoaded) {
+                    progressBar.style.width = '100%';
+                    setTimeout(hideLoadingOverlay, 500);
+                }
+            }
+
+            // Track video loading progress
+            heroVideo.addEventListener('loadstart', function() {
+                progressBar.style.width = '10%';
+            });
+
+            heroVideo.addEventListener('progress', function() {
+                if (heroVideo.buffered.length > 0) {
+                    const bufferedEnd = heroVideo.buffered.end(heroVideo.buffered.length - 1);
+                    const duration = heroVideo.duration;
+                    if (duration > 0) {
+                        const progress = (bufferedEnd / duration) * 100;
+                        progressBar.style.width = Math.min(progress, 90) + '%';
+                    }
+                }
+            });
+
+            heroVideo.addEventListener('canplaythrough', function() {
+                progressBar.style.width = '95%';
+                videoLoaded = true;
+                checkAllLoaded();
+            });
+
+            heroVideo.addEventListener('loadeddata', function() {
+                progressBar.style.width = '70%';
+            });
+
+            heroVideo.addEventListener('error', function() {
+                // If video fails to load, hide loading after a timeout
+                setTimeout(function() {
+                    videoLoaded = true;
+                    checkAllLoaded();
+                }, 3000);
+            });
+
+            // Track page load
+            window.addEventListener('load', function() {
+                pageLoaded = true;
+                checkAllLoaded();
+            });
+
+            // Safety net: hide loading after 8 seconds max
+            setTimeout(function() {
+                if (!videoLoaded || !pageLoaded) {
+                    videoLoaded = true;
+                    pageLoaded = true;
+                    checkAllLoaded();
+                }
+            }, 8000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            waitForVideoLoad();
+            
+            const heroVideo = document.querySelector('.hero-video');
+            initPortfolio();
 
             // Try to autoplay the video (with muted audio)
-            heroVideo.play().catch(e => {
-                console.log("Video autoplay was prevented:", e);
-            });
+            if (heroVideo) {
+                heroVideo.play().catch(e => {
+                    console.log("Video autoplay was prevented:", e);
+                });
+            }
         });
 
         function initPortfolio() {
@@ -3972,89 +4052,6 @@
             });
         });
 
-        // Replace the ENTIRE updateLoadingProgress function and related code with this:
-
-        // Loading Animation Functionality - Fixed Version
-        function hideLoadingOverlay() {
-            const overlay = document.getElementById('loading-overlay');
-            if (overlay) {
-                overlay.style.opacity = '0';
-                overlay.style.visibility = 'hidden';
-            }
-            document.querySelector('.video-controls-fixed').classList.add('visible');
-        }
-
-        // Hide loading overlay when page is fully loaded
-        if (document.readyState === 'complete') {
-            hideLoadingOverlay();
-        } else {
-            window.addEventListener('load', hideLoadingOverlay);
-        }
-
-        // Safety net: hide loading after 3 seconds max
-        setTimeout(hideLoadingOverlay, 3000);
-
-        // Check loading progress periodically
-        const loadingInterval = setInterval(updateLoadingProgress, 100);
-
-        // Also check when window is fully loaded
-        window.addEventListener('load', () => {
-            clearInterval(loadingInterval);
-            updateLoadingProgress();
-        });
-
-        function setVideoSource() {
-            const video = document.querySelector('.hero-video');
-            const sources = video.querySelectorAll('source');
-
-            // Remove all sources
-            while (video.firstChild) {
-                video.removeChild(video.firstChild);
-            }
-
-            // Add appropriate source based on screen size
-            if (window.innerWidth <= 768) {
-                const mobileSource = document.createElement('source');
-                mobileSource.src = 'hero-video.mp4';
-                mobileSource.type = 'video/mp4';
-                video.appendChild(mobileSource);
-            } else {
-                const desktopSource = document.createElement('source');
-                desktopSource.src = 'hero-video.mp4';
-                desktopSource.type = 'video/mp4';
-                video.appendChild(desktopSource);
-            }
-
-            video.load();
-        }
-
-        // Initial setup
-        setVideoSource();
-
-        // Update on resize
-        window.addEventListener('resize', setVideoSource);
-
-        // Update the loading progress function
-        function updateLoadingProgress() {
-            const progressBar = document.querySelector('.loading-progress-bar');
-            const resources = document.readyState === 'complete' ? 100 : 70;
-
-            if (progressBar) {
-                progressBar.style.width = `${resources}%`;
-            }
-
-            if (document.readyState === 'complete') {
-                hideLoadingOverlay();
-            }
-        }
-
-        // Update loading progress more frequently during page load
-        document.addEventListener('readystatechange', updateLoadingProgress);
-        window.addEventListener('load', updateLoadingProgress);
-
-    </script>
-
-    <script>
         // Mute Functionality
         const muteBtn = document.getElementById('mute-fix');
         const video = document.querySelector('.hero-video') || document.querySelector('video');
@@ -4067,10 +4064,10 @@
         };
 
         // Initialize mute state
-        video.muted = true;
-    </script>
+        if (video) {
+            video.muted = true;
+        }
 
-    <script>
         // Custom cursor (simple, no trailing)
         const cursor = document.querySelector(".custom-cursor");
 
@@ -4085,9 +4082,7 @@
             el.addEventListener("mouseenter", () => cursor.classList.add("hover"));
             el.addEventListener("mouseleave", () => cursor.classList.remove("hover"));
         });
-    </script>
 
-    <script>
         // Smooth scrolling only for anchor links (keeps wheel scrolling normal)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener("click", function (e) {
@@ -4102,9 +4097,8 @@
                 }
             });
         });
-    </script>
 
-    <script id="hero-video-script-2">
+        // Hero video offset calculation
         (function () {
             function getHeader() {
                 return document.querySelector('#main-header') || document.querySelector('header');
@@ -4141,69 +4135,42 @@
                         }
                     }, 400);
                 });
-
-                // Delay hiding of loading overlay until hero video is fully loaded and can play
-                var overlay = document.getElementById('loading-overlay');
-                if (overlay) {
-                    var hideOverlay = function () {
-                        overlay.style.opacity = '0';
-                        overlay.style.visibility = 'hidden';
-                    };
-                    video.addEventListener('canplaythrough', function () {
-                        // give a small delay to ensure smooth start
-                        setTimeout(hideOverlay, 300);
-                    });
-                }
             }
         })();
-    </script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const loadingOverlay = document.getElementById("loading-overlay");
-            const progressBar = document.querySelector(".loading-progress-bar");
-            const heroVideo = document.querySelector(".hero-video");
+        // Video source setting based on screen size
+        function setVideoSource() {
+            const video = document.querySelector('.hero-video');
+            const sources = video.querySelectorAll('source');
 
-            let assetsLoaded = false;
-            let videoReady = false;
-
-            // Track all page assets
-            window.addEventListener("load", () => {
-                assetsLoaded = true;
-                checkAllLoaded();
-            });
-
-            // Track when video can fully play
-            if (heroVideo) {
-                heroVideo.addEventListener("canplaythrough", () => {
-                    videoReady = true;
-                    checkAllLoaded();
-                }, { once: true });
+            // Remove all sources
+            while (video.firstChild) {
+                video.removeChild(video.firstChild);
             }
 
-            // Check if everything is ready
-            function checkAllLoaded() {
-                if (assetsLoaded && videoReady) {
-                    progressBar.style.width = "100%";
-                    setTimeout(() => {
-                        loadingOverlay.style.opacity = "0";
-                        loadingOverlay.style.visibility = "hidden";
-                    }, 500);
-                }
+            // Add appropriate source based on screen size
+            if (window.innerWidth <= 768) {
+                const mobileSource = document.createElement('source');
+                mobileSource.src = 'hero-video.mp4';
+                mobileSource.type = 'video/mp4';
+                video.appendChild(mobileSource);
+            } else {
+                const desktopSource = document.createElement('source');
+                desktopSource.src = 'hero-video.mp4';
+                desktopSource.type = 'video/mp4';
+                video.appendChild(desktopSource);
             }
 
-            // Optional: Simulated progress bar animation
-            let progress = 0;
-            let interval = setInterval(() => {
-                if (progress < 90) {
-                    progress += 1;
-                    progressBar.style.width = progress + "%";
-                } else {
-                    clearInterval(interval);
-                }
-            }, 30);
-        });
+            video.load();
+        }
+
+        // Initial setup
+        setVideoSource();
+
+        // Update on resize
+        window.addEventListener('resize', setVideoSource);
+
     </script>
 
 </body>
-    </html>
+</html>
